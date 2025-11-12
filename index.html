@@ -6,8 +6,8 @@
     <title>Kër Auto Express - Business Plan Interactif</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Chosen Palette: Tailwind Default (Blue & Gray) -->
-    <!-- Application Structure Plan: Une SPA à onglets avec 4 sections: Accueil, Services, Marché, Chiffres. Cette structure sépare les informations en blocs logiques, permettant à un utilisateur (ex: investisseur) de naviguer directement vers les données qui l'intéressent. L'onglet 'Services' est interactif (clic pour voir les prix) et l'onglet 'Chiffres' est un dashboard avec 3 graphiques (Revenus, Charges, Financement) pour une synthèse visuelle immédiate. Cette approche est plus engageante et plus facile à analyser qu'un document texte linéaire. -->
+    <!-- Chosen Palette: Bleu Précision -->
+    <!-- Application Structure Plan: Une SPA à 2 onglets. "Accueil" sert de landing page et regroupe la présentation, les services (interactifs) et le marché. "Chiffres" reste un dashboard financier. Cette structure simplifie la navigation pour un visiteur. Ajout d'une section Contact (WhatsApp) et d'un footer. -->
     <!-- Visualization & Content Choices: 
         1. Report Info: Services & Tarifs -> Goal: Explorer l'offre -> Viz: Blocs de contenu interactifs (HTML/JS) -> Interaction: Clic sur un bouton de service pour afficher/masquer les détails -> Justification: Simplifie l'interface, évite une longue liste.
         2. Report Info: Revenus Mensuels -> Goal: Voir les sources de revenus -> Viz: Graphique en Donut -> Interaction: Survol pour voir les montants -> Justification: Visuel immédiat de la répartition des revenus. -> Library: Chart.js (Canvas).
@@ -19,9 +19,9 @@
         body { font-family: 'Inter', sans-serif; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .tab-button.active { background-color: #3498DB; color: white; }
+        .tab-button.active { background-color: #E87A00; color: white; }
         .tab-button { transition: background-color 0.3s ease, color 0.3s ease; }
-        .service-button.active { background-color: #3498DB; color: white; border-color: #3498DB; }
+        .service-button.active { background-color: #E87A00; color: white; border-color: #E87A00; }
         .service-button { transition: background-color 0.3s ease, color 0.3s ease; }
         .service-detail { display: none; }
         .service-detail.active { display: block; }
@@ -34,10 +34,8 @@
         <nav class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
             <h1 class="text-3xl font-bold text-[#2C3E50]">Kër Auto Express</h1>
             <div class="mt-4 sm:mt-0 flex flex-wrap justify-center space-x-2">
-                <button data-tab="accueil" class="tab-button active px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Accueil</button>
-                <button data-tab="services" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Nos Services</button>
-                <button data-tab="marche" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Le Marché</button>
-                <button data-tab="chiffres" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Le Projet en Chiffres</button>
+                <button data-tab="accueil" class="tab-button active px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-[#F8DCBF]">Accueil</button>
+                <button data-tab="chiffres" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-[#F8DCBF]">Le Projet en Chiffres</button>
             </div>
         </nav>
     </header>
@@ -45,47 +43,48 @@
     <main class="container mx-auto p-4 md:p-8">
 
         <section id="accueil-content" class="tab-content active animate-fade-in">
+            
+            <!-- Section 1: Bienvenue -->
             <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
                 <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Bienvenue chez Kër Auto Express</h2>
                 <p class="text-lg text-[#2C3E50] mb-6">
-                    Cette application présente le concept de "Kër Auto Express", un garage automobile moderne et fiable au cœur de Dakar. Notre mission est d'offrir des services de haute qualité pour les particuliers, tout en étant un précurseur dans la prise en charge des véhicules électriques et hybrides. Explorez notre projet en naviguant à travers les différents onglets.
+                    Nous sommes un garage automobile moderne et fiable au cœur de Dakar. Notre mission est d'offrir des services de haute qualité pour les particuliers, tout en étant un précurseur dans la prise en charge des véhicules électriques et hybrides. Explorez notre projet en naviguant à travers les différents onglets.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-lg border border-blue-200">
-                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Emplacement Stratégique</h3>
-                        <p class="text-[#2C3E50]">Situé au carrefour des quartiers Liberté 6, Ouest Foire, Nord Foire et Sacré-Cœur/Mermoz, au plus proche de nos clients.</p>
+                    <div class="bg-[#2C3E50] p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-[#EAECEE] mb-2">Emplacement Stratégique</h3>
+                        <p class="text-[#EAECEE]">Situé au carrefour des quartiers Liberté 6, Ouest Foire, Nord Foire et Sacré-Cœur/Mermoz, au plus proche de nos clients.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg border border-blue-200">
-                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Transparence & Modernité</h3>
-                        <p class="text-[#2C3E50]">Des tarifs clairs et fixes pour les services de base, combinés à des équipements de diagnostic de dernière génération.</p>
+                    <div class="bg-[#2C3E50] p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-[#EAECEE] mb-2">Transparence & Modernité</h3>
+                        <p class="text-[#EAECEE]">Des tarifs clairs et fixes pour les services de base, combinés à des équipements de diagnostic de dernière génération.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg border border-blue-200">
-                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Prêt pour l'Avenir</h3>
-                        <p class="text-[#2C3E50]">Nous innovons avec une borne de rechargement solaire pour véhicules électriques, un service d'avenir à Dakar.</p>
+                    <div class="bg-[#2C3E50] p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-[#EAECEE] mb-2">Prêt pour l'Avenir</h3>
+                        <p class="text-[#EAECEE]">Nous innovons avec une borne de rechargement solaire pour véhicules électriques, un service d'avenir à Dakar.</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section id="services-content" class="tab-content animate-fade-in">
-            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+            <!-- Section 2: Nos Services (Anciennement onglet) -->
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg mt-8">
                 <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Nos Services & Tarifs</h2>
                 <p class="text-lg text-[#2C3E50] mb-6">
                     Nous proposons une gamme de services claire et transparente pour éviter les mauvaises surprises. Cliquez sur un service pour découvrir notre grille tarifaire détaillée.
                 </p>
 
                 <div class="flex flex-wrap gap-2 mb-6">
-                    <button class="service-button active text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="diagnostic">
+                    <button class="service-button active text-[#E87A00] bg-white border border-[#E87A00] hover:bg-[#F8DCBF] px-4 py-2 rounded-full font-medium" data-service="diagnostic">
                         Diagnostic
                     </button>
-                    <button class="service-button text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="reparation">
+                    <button class="service-button text-[#E87A00] bg-white border border-[#E87A00] hover:bg-[#F8DCBF] px-4 py-2 rounded-full font-medium" data-service="reparation">
                         Dépannage & Réparation
                     </button>
-                    <button class="service-button text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="lavage">
+                    <button class="service-button text-[#E87A00] bg-white border border-[#E87A00] hover:bg-[#F8DCBF] px-4 py-2 rounded-full font-medium" data-service="lavage">
                         Lavage Auto
                     </button>
-                    <button class="service-button text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="clim">
+                    <button class="service-button text-[#E87A00] bg-white border border-[#E87A00] hover:bg-[#F8DCBF]] px-4 py-2 rounded-full font-medium" data-service="clim">
                         Climatisation
                     </button>
                 </div>
@@ -128,12 +127,11 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section id="marche-content" class="tab-content animate-fade-in">
-            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
-                <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Analyse du Marché</h2>
-                <p class="text-lg text-[#2C3E50] mb-6">
+            <!-- Section 3: Le Marché (Anciennement onglet) -->
+            <div class="bg-[#2C3E50] p-6 md:p-8 rounded-lg shadow-lg mt-8">
+                <h2 class="text-3xl font-bold text-[#EAECEE] mb-4">Analyse du Marché</h2>
+                <p class="text-lg text-[#EAECEE] mb-6">
                     Le projet est positionné pour répondre à une demande claire et croissante à Dakar. Nous ciblons un segment d'automobilistes à la recherche d'un service fiable, professionnel et moderne, à mi-chemin entre les petits garages de quartier et les concessionnaires.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -151,8 +149,24 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Section 4: Nous Contacter (Nouvelle section) -->
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg mt-8">
+                <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Nous Contacter</h2>
+                <p class="text-lg text-[#2C3E50] mb-6">
+                    Une question ? Un devis ? Contactez-nous directement sur WhatsApp pour une réponse rapide.
+                </p>
+                <a href="https://wa.me/221773630758" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-[#25D366] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="mr-3">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.91 6.066l-.213.324-1.146 4.144 4.224-1.114.341-.247z"/>
+                    </svg>
+                    +221 77 363 07 58
+                </a>
+            </div>
+
         </section>
 
+        <!-- Onglet 2: Le Projet en Chiffres -->
         <section id="chiffres-content" class="tab-content animate-fade-in">
             <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
                 <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Le Projet en Chiffres</h2>
@@ -200,6 +214,12 @@
         </section>
 
     </main>
+
+    <footer class="bg-[#2C3E50] text-[#EAECEE] mt-12 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Kër Auto Express. Tous droits réservés.</p>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
