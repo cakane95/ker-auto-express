@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kër Auto Express - Business Plan Interactif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Tailwind Default (Blue & Gray) -->
+    <!-- Application Structure Plan: Une SPA à onglets avec 4 sections: Accueil, Services, Marché, Chiffres. Cette structure sépare les informations en blocs logiques, permettant à un utilisateur (ex: investisseur) de naviguer directement vers les données qui l'intéressent. L'onglet 'Services' est interactif (clic pour voir les prix) et l'onglet 'Chiffres' est un dashboard avec 3 graphiques (Revenus, Charges, Financement) pour une synthèse visuelle immédiate. Cette approche est plus engageante et plus facile à analyser qu'un document texte linéaire. -->
+    <!-- Visualization & Content Choices: 
+        1. Report Info: Services & Tarifs -> Goal: Explorer l'offre -> Viz: Blocs de contenu interactifs (HTML/JS) -> Interaction: Clic sur un bouton de service pour afficher/masquer les détails -> Justification: Simplifie l'interface, évite une longue liste.
+        2. Report Info: Revenus Mensuels -> Goal: Voir les sources de revenus -> Viz: Graphique en Donut -> Interaction: Survol pour voir les montants -> Justification: Visuel immédiat de la répartition des revenus. -> Library: Chart.js (Canvas).
+        3. Report Info: Charges Mensuelles -> Goal: Voir les postes de coût -> Viz: Graphique en Donut -> Interaction: Survol pour voir les montants -> Justification: Visuel immédiat de la répartition des charges. -> Library: Chart.js (Canvas).
+        4. Report Info: Besoins de financement -> Goal: Comprendre le capital de départ -> Viz: Graphique en Barres (Min/Max) -> Interaction: Survol pour voir les montants -> Justification: Montre la fourchette de financement nécessaire. -> Library: Chart.js (Canvas).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button.active { background-color: #3498DB; color: white; }
+        .tab-button { transition: background-color 0.3s ease, color 0.3s ease; }
+        .service-button.active { background-color: #3498DB; color: white; border-color: #3498DB; }
+        .service-button { transition: background-color 0.3s ease, color 0.3s ease; }
+        .service-detail { display: none; }
+        .service-detail.active { display: block; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    </style>
+</head>
+<body class="bg-[#EAECEE] text-[#2C3E50]">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold text-[#2C3E50]">Kër Auto Express</h1>
+            <div class="mt-4 sm:mt-0 flex flex-wrap justify-center space-x-2">
+                <button data-tab="accueil" class="tab-button active px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Accueil</button>
+                <button data-tab="services" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Nos Services</button>
+                <button data-tab="marche" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Le Marché</button>
+                <button data-tab="chiffres" class="tab-button px-4 py-2 rounded-lg font-medium text-[#2C3E50] hover:bg-blue-100">Le Projet en Chiffres</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="accueil-content" class="tab-content active animate-fade-in">
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Bienvenue chez Kër Auto Express</h2>
+                <p class="text-lg text-[#2C3E50] mb-6">
+                    Cette application présente le concept de "Kër Auto Express", un garage automobile moderne et fiable au cœur de Dakar. Notre mission est d'offrir des services de haute qualité pour les particuliers, tout en étant un précurseur dans la prise en charge des véhicules électriques et hybrides. Explorez notre projet en naviguant à travers les différents onglets.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Emplacement Stratégique</h3>
+                        <p class="text-[#2C3E50]">Situé au carrefour des quartiers Liberté 6, Ouest Foire, Nord Foire et Sacré-Cœur/Mermoz, au plus proche de nos clients.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Transparence & Modernité</h3>
+                        <p class="text-[#2C3E50]">Des tarifs clairs et fixes pour les services de base, combinés à des équipements de diagnostic de dernière génération.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Prêt pour l'Avenir</h3>
+                        <p class="text-[#2C3E50]">Nous innovons avec une borne de rechargement solaire pour véhicules électriques, un service d'avenir à Dakar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services-content" class="tab-content animate-fade-in">
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Nos Services & Tarifs</h2>
+                <p class="text-lg text-[#2C3E50] mb-6">
+                    Nous proposons une gamme de services claire et transparente pour éviter les mauvaises surprises. Cliquez sur un service pour découvrir notre grille tarifaire détaillée.
+                </p>
+
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="service-button active text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="diagnostic">
+                        Diagnostic
+                    </button>
+                    <button class="service-button text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="reparation">
+                        Dépannage & Réparation
+                    </button>
+                    <button class="service-button text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="lavage">
+                        Lavage Auto
+                    </button>
+                    <button class="service-button text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-full font-medium" data-service="clim">
+                        Climatisation
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg">
+                    <div id="diagnostic-detail" class="service-detail active">
+                        <h3 class="text-2xl font-semibold text-[#2C3E50] mb-4">Diagnostic Électronique</h3>
+                        <p class="text-[#2C3E50] mb-4">Un scan complet pour identifier rapidement et précisément les pannes.</p>
+                        <ul class="list-disc list-inside space-y-2 text-[#2C3E50]">
+                            <li><span class="font-semibold">Berlines / Sedans :</span> 35.000 FCFA</li>
+                            <li><span class="font-semibold">4x4 / SUVs :</span> 75.000 FCFA</li>
+                            <li><span class="font-semibold">Voitures haut de gamme :</span> 150.000 FCFA</li>
+                        </ul>
+                    </div>
+                    <div id="reparation-detail" class="service-detail">
+                        <h3 class="text-2xl font-semibold text-[#2C3E50] mb-4">Dépannage & Réparation</h3>
+                        <p class="text-[#2C3E50] mb-4">Devis détaillé fourni après diagnostic. Les estimations varient selon la complexité.</p>
+                        <ul class="list-disc list-inside space-y-2 text-[#2C3E50]">
+                            <li><span class="font-semibold">Interventions courantes (Vidange, freins) :</span> 350.000 - 1.000.000 FCFA</li>
+                            <li><span class="font-semibold">Réparations moyennes (Distribution, embrayage) :</span> 1.500.000 - 3.000.000 FCFA</li>
+                            <li><span class="font-semibold">Réparations majeures (Moteur, boîte) :</span> 5.000.000 FCFA et plus</li>
+                        </ul>
+                    </div>
+                    <div id="lavage-detail" class="service-detail">
+                        <h3 class="text-2xl font-semibold text-[#2C3E50] mb-4">Lavage Auto</h3>
+                        <p class="text-[#2C3E50] mb-4">Des solutions pour chaque besoin et chaque budget.</p>
+                        <ul class="list-disc list-inside space-y-2 text-[#2C3E50]">
+                            <li><span class="font-semibold">Lavage Express (Extérieur + Aspirateur) :</span> 3.500 FCFA</li>
+                            <li><span class="font-semibold">Lavage Complet (Intérieur/Extérieur détaillé) :</span> 6.000 FCFA</li>
+                            <li><span class="font-semibold">Lavage Prestige (Complet + Shampoing sièges) :</span> 20.000 FCFA</li>
+                        </ul>
+                    </div>
+                    <div id="clim-detail" class="service-detail">
+                        <h3 class="text-2xl font-semibold text-[#2C3E50] mb-4">Climatisation (Froid)</h3>
+                        <p class="text-[#2C3E50] mb-4">Un service essentiel pour le confort à Dakar.</p>
+                        <ul class="list-disc list-inside space-y-2 text-[#2C3E50]">
+                            <li><span class="font-semibold">Recharge de gaz (tous types) :</span> 45.000 FCFA</li>
+                            <li><span class="font-semibold">Diagnostic et Réparation circuit froid :</span> Sur devis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="marche-content" class="tab-content animate-fade-in">
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Analyse du Marché</h2>
+                <p class="text-lg text-[#2C3E50] mb-6">
+                    Le projet est positionné pour répondre à une demande claire et croissante à Dakar. Nous ciblons un segment d'automobilistes à la recherche d'un service fiable, professionnel et moderne, à mi-chemin entre les petits garages de quartier et les concessionnaires.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Notre Cible</h3>
+                        <p class="text-[#2C3E50]">Familles, cadres, et le segment en forte croissance des chauffeurs de VTC (Wuling, Beijing, Haval...) qui exigent fiabilité et rapidité.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">La Concurrence</h3>
+                        <p class="text-[#2C3E50]">Nous nous différencions des garages de quartier par notre équipement moderne et notre transparence, et des concessionnaires par nos prix compétitifs et notre agilité.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-2">Notre Opportunité</h3>
+                        <p class="text-[#2C3E50]">Offrir un service "intermédiaire" de haute qualité et prendre de l'avance sur l'entretien des véhicules électriques et hybrides, un avantage concurrentiel majeur.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="chiffres-content" class="tab-content animate-fade-in">
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-[#2C3E50] mb-4">Le Projet en Chiffres</h2>
+                <p class="text-lg text-[#2C3E50] mb-6">
+                    Voici les hypothèses financières clés de notre projet. Ces chiffres sont des estimations pour la première année d'activité, conçues pour être prudentes et réalistes. Interagissez avec les graphiques pour voir les détails.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-blue-50 text-center p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-1">Chiffre d'Affaires Mensuel</h3>
+                        <p class="text-3xl font-bold text-blue-900">10,3 M <span class="text-lg font-medium">FCFA</span></p>
+                    </div>
+                    <div class="bg-gray-50 text-center p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Charges Mensuelles</h3>
+                        <p class="text-3xl font-bold text-gray-900">5,1 M <span class="text-lg font-medium">FCFA</span></p>
+                    </div>
+                    <div class="bg-blue-50 text-center p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-1">Bénéfice Brut Mensuel</h3>
+                        <p class="text-3xl font-bold text-blue-900">5,2 M <span class="text-lg font-medium">FCFA</span></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-4 text-center">Répartition des Revenus</h3>
+                        <div class="w-full max-w-lg mx-auto h-80 md:h-96 max-h-[400px] relative">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-semibold text-[#2C3E50] mb-4 text-center">Répartition des Charges</h3>
+                        <div class="w-full max-w-lg mx-auto h-80 md:h-96 max-h-[400px] relative">
+                            <canvas id="chargesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 mt-8 rounded-lg shadow-inner border border-gray-200">
+                    <h3 class="text-xl font-semibold text-[#2C3E50] mb-4 text-center">Besoins de Financement (Min/Max)</h3>
+                    <div class="w-full max-w-2xl mx-auto h-80 md:h-96 max-h-[400px] relative">
+                        <canvas id="fundingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+            const serviceTabs = document.querySelectorAll('.service-button');
+            const serviceContents = document.querySelectorAll('.service-detail');
+            
+            let charts = {
+                revenue: null,
+                charges: null,
+                funding: null
+            };
+
+            const fcfFormatter = new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'XOF',
+                minimumFractionDigits: 0
+            });
+
+            function updateTab(targetId) {
+                contents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                document.getElementById(targetId + '-content').classList.add('active');
+                document.querySelector(`[data-tab="${targetId}"]`).classList.add('active');
+                
+                if (targetId === 'chiffres') {
+                    initCharts();
+                }
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    updateTab(e.target.dataset.tab);
+                });
+            });
+
+            serviceTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const targetId = e.target.dataset.service;
+
+                    serviceContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    serviceTabs.forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+
+                    document.getElementById(targetId + '-detail').classList.add('active');
+                    e.target.classList.add('active');
+                });
+            });
+
+            const wrapLabel = (label, maxWidth = 16) => {
+                let lines = [];
+                let words = label.split(' ');
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length <= maxWidth) {
+                        currentLine += word + ' ';
+                    } else {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    }
+                }
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            function initCharts() {
+                if (!charts.revenue) {
+                    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+                    charts.revenue = new Chart(ctxRevenue, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Diagnostic', 'Réparations', 'Lavage', 'Clim', 'Recharge EV'],
+                            datasets: [{
+                                data: [1500000, 6000000, 1950000, 675000, 150000],
+                                backgroundColor: ['#3498DB', '#2C3E50', '#60A5FA', '#1E3A8A', '#93C5FD'],
+                                hoverOffset: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => {
+                                            const label = context.label || '';
+                                            const value = context.raw || 0;
+                                            return `${label}: ${fcfFormatter.format(value)}`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                if (!charts.charges) {
+                    const ctxCharges = document.getElementById('chargesChart').getContext('2d');
+                    charts.charges = new Chart(ctxCharges, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Loyer', 'Salaires', 'Eau & Élec.', 'Consommables', 'Marketing'],
+                            datasets: [{
+                                data: [2000000, 1500000, 400000, 900000, 300000],
+                                backgroundColor: ['#E87A00', '#F97316', '#EA580C', '#D97706', '#FB923C'],
+                                hoverOffset: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => {
+                                            const label = context.label || '';
+                                            const value = context.raw || 0;
+                                            return `${label}: ${fcfFormatter.format(value)}`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                if (!charts.funding) {
+                    const ctxFunding = document.getElementById('fundingChart').getContext('2d');
+                    const fundingLabels = ['Investissement initial', 'Fonds de roulement'];
+                    charts.funding = new Chart(ctxFunding, {
+                        type: 'bar',
+                        data: {
+                            labels: fundingLabels,
+                            datasets: [
+                                {
+                                    label: 'Min',
+                                    data: [22000000, 12000000],
+                                    backgroundColor: '#3498DB',
+                                    borderRadius: 4
+                                },
+                                {
+                                    label: 'Max',
+                                    data: [32000000, 15000000],
+                                    backgroundColor: '#2C3E50',
+                                    borderRadius: 4
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => {
+                                            const label = context.dataset.label || '';
+                                            const value = context.raw || 0;
+                                            return `${label}: ${fcfFormatter.format(value)}`;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        callback: function(value) {
+                                            return wrapLabel(fundingLabels[value]);
+                                        }
+                                    }
+                                },
+                                y: {
+                                    ticks: {
+                                        callback: (value) => fcfFormatter.format(value)
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
